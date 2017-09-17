@@ -30,13 +30,27 @@ window.onload = function(){
 			content.style.display = 'block';
 			contentArr[this.index].style.display = 'block';
 		}
+		liArr[i].onmouseleave = function(){
+			content.style.display = 'none';
+			contentArr[this.index].style.display = 'none';
+		}
+		contentArr[i].onmouseover = function(){
+			for(var j = 0 ; j <= contentArr.length - 1 ; j++){
+				content.style.display = 'none';
+				contentArr[j].style.display = 'none';
+			}
+			content.style.display = 'block';
+			this.style.display = 'block';
+		}
 	}
-	sideNav.onmouseleave = function(){
+
+	content.onmouseleave = function(){
 		content.style.display = 'none';
 	}
 
 
-	// 轮播图部分
+	// 轮播图部分s
+	var swiperm = document.querySelector('.swiper-container');
 	var swiper = new Swiper('.swiper-container', {
         pagination: '.swiper-pagination',
         paginationClickable: true,
@@ -46,6 +60,16 @@ window.onload = function(){
         paginationBulletRender: function (swiper, index, className) {
             return '<span class="' + className + '">' + (index + 1) + '</span>';
         }
+    });
+    $('.swiper-container').on('mouseover','span',function(){
+    		swiper.stopAutoplay();	
+			swiper.slideTo($(this).index()+1,100,false);
+    	$(this).on('mouseleave',function(){
+    		swiper.startAutoplay();
+    	});
+    });
+    $('.swiper-container').on('mouseleave','span',function(){
+    	swiper.startAutoplay();
     });
 
 
